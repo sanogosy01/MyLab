@@ -10,18 +10,16 @@ pipeline{
        Name = readMavenPom().getName()
        GroupId = readMavenPom().getGroupId()
     }
-    post {
-        always {
-            junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
-        }
-    }
     stages {
         // Specify various stage with in stages
 
         // stage 1. Build
         stage ('Build'){
             steps {
-                sh 'mvn clean install package'
+                sh 'mvn clean install package',
+                always {
+                    junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
+                }
             }
         }
 
