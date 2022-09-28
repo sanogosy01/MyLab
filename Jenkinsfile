@@ -12,18 +12,16 @@ pipeline{
     }
     stages {
         // Specify various stage with in stages
-        // stage ('Skip'){
-        //     steps {
-        //         junit skipPublishingChecks: true, testResults: 'test-results.xml'
-        //     }
-        // }
+        
         // stage 1. Build
         stage ('Build'){
             steps {
                 sh 'mvn clean install package'
             }
+        }
 
-            post {
+        stage ('Skip'){
+            steps {
                 junit skipPublishingChecks: true, testResults: 'test-results.xml'
             }
         }
