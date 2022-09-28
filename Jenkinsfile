@@ -37,11 +37,11 @@ pipeline{
             }
         }
 
-        stage("getPomProjectVersion") {
-            steps {
-                def pomProjectVersion = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-            }
-        }
+        // stage("getPomProjectVersion") {
+        //     steps {
+        //         def pomProjectVersion = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+        //     }
+        // }
 
         //stage 3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus') {
