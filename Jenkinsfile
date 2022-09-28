@@ -29,7 +29,7 @@ pipeline{
 
         stage ('Skip'){
             steps {
-                junit skipPublishingChecks: true
+                junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
             }
         }
 
