@@ -12,7 +12,11 @@ pipeline{
     }
     stages {
         // Specify various stage with in stages
-
+        stage ('Skip'){
+            steps {
+                junit skipPublishingChecks: true, testResults: 'test-results.xml'
+            }
+        }
         // stage 1. Build
         stage ('Build'){
             steps {
@@ -27,11 +31,7 @@ pipeline{
             }
         }
 
-        stage ('Skip'){
-            steps {
-                junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
-            }
-        }
+        
 
         // Stage 3 : Deploying
         stage ('Deploy'){
