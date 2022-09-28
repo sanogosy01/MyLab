@@ -30,6 +30,12 @@ pipeline{
             }
         }
 
+        stage ('Skip'){
+            steps {
+                junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
+            }
+        }
+
         // Stage 3 : Deploying
         stage ('Deploy'){
             steps {
