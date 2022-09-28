@@ -24,15 +24,12 @@ pipeline{
         stage ('Test'){
             steps {
                 echo ' testing......'
-                always {
-                    junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
-                }
             }
         }
 
         stage ('Skip'){
             steps {
-                junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
+                junit skipPublishingChecks: true
             }
         }
 
