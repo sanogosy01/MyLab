@@ -20,12 +20,6 @@ pipeline{
             }
         }
 
-        stage ('Skip'){
-            steps {
-                junit skipPublishingChecks: true, testResults: 'test-results.xml'
-            }
-        }
-
         // Stage2 : Testing
         stage ('Test'){
             steps {
@@ -46,7 +40,11 @@ pipeline{
         //stage 3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus') {
             steps {
-
+                post {
+                    steps {
+                        junit skipPublishingChecks: true, testResults: 'test-results.xml'
+                    }
+                }
                 script {
 
                     def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
