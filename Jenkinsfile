@@ -10,6 +10,11 @@ pipeline{
        Name = readMavenPom().getName()
        GroupId = readMavenPom().getGroupId()
     }
+    post {
+        always {
+            junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
+        }
+    }
     stages {
         // Specify various stage with in stages
 
@@ -42,20 +47,20 @@ pipeline{
 
                 script {
 
-                def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
+                    def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
 
-                nexusArtifactUploader artifacts: 
-                [[artifactId: "${ArtifactId}",  
-                classifier: '', 
-                file: "target/${ArtifactId}-${Version}.war", 
-                type: 'war']], 
-                credentialsId: 'db40c03e-d6f2-4c60-8558-1cfa5bb1d2b6', 
-                groupId: "${GroupId}", 
-                nexusUrl: '172.20.10.68:8081', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: "${NexusRepo}", 
-                version: "${Version}"
+                    nexusArtifactUploader artifacts: 
+                    [[artifactId: "${ArtifactId}",  
+                    classifier: '', 
+                    file: "target/${ArtifactId}-${Version}.war", 
+                    type: 'war']], 
+                    credentialsId: 'db40c03e-d6f2-4c60-8558-1cfa5bb1d2b6', 
+                    groupId: "${GroupId}", 
+                    nexusUrl: '172.20.10.68:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: "${NexusRepo}", 
+                    version: "${Version}"
                 }
             }
         }
