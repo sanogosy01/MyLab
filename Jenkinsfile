@@ -4,12 +4,12 @@ pipeline{
     tools {
         maven 'maven'
     }
-    // environment{
-    //    ArtifactId = readMavenPom().getArtifactId()
-    //    Version = readMavenPom().getVersion()
-    //    Name = readMavenPom().getName()
-    //    GroupId = readMavenPom().getGroupId()
-    // }
+    environment{
+       ArtifactId = readMavenPom().getArtifactId()
+       Version = readMavenPom().getVersion()
+       Name = readMavenPom().getName()
+       GroupId = readMavenPom().getGroupId()
+    }
     stages {
         // Specify various stage with in stages
 
@@ -39,7 +39,24 @@ pipeline{
         //stage 3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus') {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'VinayDevOpsLab', classifier: '', file: 'target/VinayDevOpsLab-0.0.5-SNAPSHOT.war', type: 'war']], credentialsId: 'db40c03e-d6f2-4c60-8558-1cfa5bb1d2b6', groupId: 'com.vinaysdevopslab', nexusUrl: '172.20.10.68:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'VinaysDevOpsLab-SNAPSHOT', version: '0.0.5-SNAPSHOT'
+
+                script {
+
+                def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
+
+                nexusArtifactUploader artifacts: 
+                [[artifactId: "${ArtifactId}",  
+                classifier: '', 
+                file: "target/${ArtifactId}-${Version}.war", 
+                type: 'war']], 
+                credentialsId: 'db40c03e-d6f2-4c60-8558-1cfa5bb1d2b6', 
+                groupId: "${GroupId}", 
+                nexusUrl: '172.20.10.68:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: "${NexusRepo}", 
+                version: "${Version}"
+                }
             }
         }
 
@@ -66,15 +83,15 @@ pipeline{
     //         }
     //     }
 
-    //     // Stage 4 : Print some information
-    //     stage ('Print Environment variables'){
-    //                 steps {
-    //                     echo "Artifact ID is '${ArtifactId}'"
-    //                     echo "Version is '${Version}'"
-    //                     echo "GroupID is '${GroupId}'"
-    //                     echo "Name is '${Name}'"
-    //                 }
-    //             }
+        // Stage 4 : Print some information
+        stage ('Print Environment variables'){
+            steps {
+                echo "Artifact ID is '${ArtifactId}'"
+                echo "Version is '${Version}'"
+                echo "GroupID is '${GroupId}'"
+                echo "Name is '${Name}'"
+            }
+        }
 
     //     // Stage 5 : Deploying the build artifact to Apache Tomcat
     //     stage ('Deploy to Tomcat'){
