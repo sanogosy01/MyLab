@@ -16,10 +16,7 @@ pipeline{
         // stage 1. Build
         stage ('Build'){
             steps {
-                sh 'mvn clean install package',
-                always {
-                    junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
-                }
+                sh 'mvn clean install package'
             }
         }
 
@@ -27,7 +24,9 @@ pipeline{
         stage ('Test'){
             steps {
                 echo ' testing......'
-
+                always {
+                    junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
+                }
             }
         }
 
