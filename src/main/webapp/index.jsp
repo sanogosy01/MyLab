@@ -52,9 +52,9 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Hello</h1>
-        <p>This is Aube Nouvelle DevOps AWS Lab</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Infos more &raquo;</a></p>
-        <p><a class="btn btn-primary btn-lg" role="button">Login Pages &raquo;</a></p>
+        <p>This is Aube Nouvelle Devops DevOps AWS Lab</p>
+        <p><a class="btn btn-primary btn-lg" role="button">Info more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" role="button">Login Page &raquo;</a></p>
         <!-- <p><a class="btn btn-primary btn-lg" role="button">Success! &raquo;</a></p> -->
     </div>
 </div>
